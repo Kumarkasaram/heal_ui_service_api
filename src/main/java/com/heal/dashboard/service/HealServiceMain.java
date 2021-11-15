@@ -1,17 +1,13 @@
 package com.heal.dashboard.service;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
 @EnableTransactionManagement(proxyTargetClass = true)
-@ComponentScan
 @PropertySource(value="classpath:conf.properties")
 @Slf4j
 public class HealServiceMain {

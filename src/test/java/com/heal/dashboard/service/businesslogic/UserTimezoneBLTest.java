@@ -1,7 +1,4 @@
 package com.heal.dashboard.service.businesslogic;
-
-
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,8 +8,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.heal.dashboard.service.dao.mysql.TimezoneDao;
 import com.heal.dashboard.service.beans.TagDetails;
 import com.heal.dashboard.service.beans.TagMapping;
 import com.heal.dashboard.service.beans.TimezoneDetail;
@@ -21,6 +16,7 @@ import com.heal.dashboard.service.beans.UserDetailsBean;
 import com.heal.dashboard.service.beans.UserTimezonePojo;
 import com.heal.dashboard.service.beans.UserTimezoneRequestData;
 import com.heal.dashboard.service.beans.UtilityBean;
+import com.heal.dashboard.service.dao.mysql.TimezoneDao;
 import com.heal.dashboard.service.exception.ClientException;
 import com.heal.dashboard.service.util.Constants;
 
@@ -83,7 +79,7 @@ public class UserTimezoneBLTest {
 		timezoneDetail.setAccountId(1);
 		timezoneDetail.setId(1);
 		timezoneDetail.setObjectId(2);
-		timezoneDetail.setTimeOffset(1L);
+		timezoneDetail.setTimeOffset(1l);
 
 		// TagDetails Mockup
 		tagDetails = new TagDetails();
@@ -108,14 +104,14 @@ public class UserTimezoneBLTest {
 
 	@Test
 	public void getClientValidation_Success() throws Exception {
-		String token = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJYeldqTWZBV25zaGpGUHFWcDdiRWNjMkZ2b0d4TDBCSjhzMnVhazFUUWd3In0.eyJleHAiOjE2MzYyODcyMjMsImlhdCI6MTYzNjI4NDUyMywianRpIjoiYWYwNGQ5MTYtYjNjNC00MTlhLTk3YTAtYTE1Y2JhNDk4MTlmIiwiaXNzIjoiaHR0cHM6Ly8xOTIuMTY4LjEzLjQ0Ojg0NDMvYXV0aC9yZWFsbXMvbWFzdGVyIiwic3ViIjoiNzY0MDEyM2EtZmJkZS00ZmU1LTk4MTItNTgxY2QxZTNhOWMxIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYWRtaW4tY2xpIiwic2Vzc2lvbl9zdGF0ZSI6Ijc1ZTg2MGM4LTdmZDAtNGFlOS05OGFhLWU2M2IzMTE5MzUzMiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6ImFwcHNvbmVhZG1pbiIsImVtYWlsIjoiYXBwc29uZWFkbWluLmtAYXBwbm9taWMuY29tIn0.ngy-45jwAX-CU2KBSlws3_U4QeDpkOzRMQEeeRyrD7OvDnnUegWBv6jaT3bGMXQDmF_Ph7xfvqHLQcsDTDzhnxPXw8RKIoC6DFEK9r01Jug9zmt5L7Rco44xN9mYodh1xLdpL6a-vN57ZFvSqxen41r2G1_CKb_yqSVE67QmUxiM-vK9ShpSuy69qJ9Divy2GdM6DNPjN05Rsp25nF6XeNRE2QF8bnC1f_18yPZCyk9_XiLxJFHecbcpbDgYI-M4Tu_RuHnCCZOg-xZIfb2CSKPPwDqWQ3vV1cclIj3Ba4BLH2qAi-8Be1ktkBlM1LJ6xfiahT33pS-zWC5C6XLbeQ";
 		Assert.assertEquals("appsoneadmin",
-				serTimezoneBL.clientValidation(tzResponse, token, "appsoneadmin").getPojoObject().getUsername());
+				serTimezoneBL.clientValidation(tzResponse,"7640123a-fbde-4fe5-9812-581cd1e3a9c1","appsoneadmin").getPojoObject().getUsername());
 	}
 
 	@Test(expected = ClientException.class)
 	public void getClientValidation_ClientException1() throws ClientException {
-		serTimezoneBL.clientValidation(userTimezoneRequestData, (String) null);
+		serTimezoneBL.clientValidation(userTimezoneRequestData,"");
+
 	}
 
 	@Test

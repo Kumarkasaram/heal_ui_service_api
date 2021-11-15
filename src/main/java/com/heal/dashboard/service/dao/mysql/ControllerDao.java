@@ -94,7 +94,25 @@ public class ControllerDao {
 
         return jdbcTemplate.query(query, (rs, rowNum) -> ViewApplicationServiceMappingBean.builder().build(), accountId, applicationIdentifier);
     }
-
+    public  List<Controller> getApplicationList(int accountId) throws ServerException {
+  		try {
+  			String query = "select id as appId,name as name,controller_type_id as controllerTypeId,identifier as identifier,status as status,user_details_id as createdBy,created_time as createdOn, updated_time as updatedTime ,account_id as accountId from controller where account_id = ? and status = 1 and controller_type_id = 191";
+  			return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Controller.class),accountId);
+  		} catch (DataAccessException e) {
+  			log.error("Error while fetching ApplicationList information", e);
+  			throw new ServerException("Error in ControllerDao.getApplicationList while fetching ApplicationList information for accountId : "+accountId);
+  		}
+  	}
+    public  List<ControllerBean> getApplicationsBySvcId(int serviceId,int accountId) throws ServerException {
+  		try {
+  			String query = "select application_id as id , application_name as name, application_identifier as identifier , 1 as status ,account_id as accountId, 191 as controllerTypeId from view_application_service_mapping where service_id = ? and account_id = ?";
+  			return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(ControllerBean.class),serviceId,accountId);
+  		} catch (DataAccessException e) {
+  			log.error("Error while fetching controller information", e);
+  			throw new ServerException("Error while fetching view_application_service_mapping information for accountId : "+accountId);
+  		}
+  	}
+    
 
 }
 

@@ -77,14 +77,14 @@ public class TimeZoneServiceTest {
 	}
 
 	@Test(expected = Exception.class)
-	public void getAccountList_BadRequestException() throws ClientException, ServerException, DataProcessingException {
+	public void setUserPreferedZone_BadRequestException() throws ClientException, ServerException, DataProcessingException {
 		Mockito.when(setUserTimeZoneBL.clientValidation(Mockito.any()))
 				.thenThrow(new Exception("authentication failed"));
 		userTimeZoneController.setUserPreferedZone(null, null, null);
 	}
 
 	@Test(expected = RuntimeException.class)
-	public void getAccountList_InternalServerError() throws Exception {
+	public void setUserPreferedZone_InternalServerError() throws Exception {
 		Mockito.when(setUserTimeZoneBL.clientValidation(Mockito.any()))
 				.thenReturn(UtilityBean.<UserTimezoneRequestData>builder()
 						.authToken("7640123a-fbde-4fe5-9812-581cd1e3a9c1").pojoObject(userTimezoneRequestData).build());

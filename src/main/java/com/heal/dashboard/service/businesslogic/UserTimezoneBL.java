@@ -1,19 +1,29 @@
 package com.heal.dashboard.service.businesslogic;
 
-import com.heal.dashboard.service.beans.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.heal.dashboard.service.beans.TagDetails;
+import com.heal.dashboard.service.beans.TagMapping;
+import com.heal.dashboard.service.beans.TimezoneDetail;
+import com.heal.dashboard.service.beans.UserAttributeBeen;
+import com.heal.dashboard.service.beans.UserDetailsBean;
+import com.heal.dashboard.service.beans.UserTimezonePojo;
+import com.heal.dashboard.service.beans.UserTimezoneRequestData;
+import com.heal.dashboard.service.beans.UtilityBean;
 import com.heal.dashboard.service.dao.mysql.TimezoneDao;
 import com.heal.dashboard.service.exception.ClientException;
 import com.heal.dashboard.service.exception.DataProcessingException;
 import com.heal.dashboard.service.exception.ServerException;
 import com.heal.dashboard.service.util.Constants;
 import com.heal.dashboard.service.util.DateUtil;
-import com.heal.dashboard.service.util.Utility;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
@@ -21,10 +31,12 @@ public class UserTimezoneBL implements BusinessLogic<UserTimezoneRequestData, Us
 
     @Autowired
     TimezoneDao timezoneDao;
+    ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public UtilityBean<UserTimezoneRequestData> clientValidation(Object requestBody, String... requestParams) throws ClientException {
-        String jwtToken = requestParams[0];
+        mapper.setSerializationInclusion(Include.NON_NULL);
+    	String jwtToken = requestParams[0];
         if (null == jwtToken || jwtToken.trim().isEmpty()) {
             throw new ClientException(Constants.AUTHORIZATION_TOKEN_IS_NULL_OR_EMPTY);
         }
@@ -35,7 +47,7 @@ public class UserTimezoneBL implements BusinessLogic<UserTimezoneRequestData, Us
         }
 
         UserTimezoneRequestData userTimezoneRequestData = new UserTimezoneRequestData();
-        userTimezoneRequestData.setUserTimezonePojo((UserTimezonePojo) requestBody);
+        userTimezoneRequestData.setUserTimezonePojo(mapper.convertValue(requestBody, UserTimezonePojo.class));
         userTimezoneRequestData.setUsername(requestParams[1]);
 
         return UtilityBean.<UserTimezoneRequestData>builder()

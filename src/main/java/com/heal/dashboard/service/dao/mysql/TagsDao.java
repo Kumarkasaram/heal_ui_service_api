@@ -3,8 +3,11 @@ package com.heal.dashboard.service.dao.mysql;
 
 import com.heal.dashboard.service.beans.TagDetails;
 import com.heal.dashboard.service.beans.TagMapping;
+import com.heal.dashboard.service.exception.ServerException;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -53,4 +56,15 @@ public class TagsDao {
 
         return Collections.emptyList();
     }
+    
+    public  List<TagMapping> getTagMappingDetailsByAccountId(int accountId) throws ServerException {
+  		try {
+  			String query = "select id, tag_id , object_id , object_ref_table , tag_key , tag_value,created_time createdTime,updated_time updatedTime,account_id accountId,user_details_id userDetailsId  from tag_mapping where account_id = ?";
+  			return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(TagMapping.class),accountId);
+  		} catch (DataAccessException e) {
+  			log.error("Error while fetching tag_mapping information", e);
+  			throw new ServerException("Error in getTagMappingDetailsByAccountId() method while fetching tag_mapping information for accountId : "+accountId);
+  		}
+  	}
+    
 }

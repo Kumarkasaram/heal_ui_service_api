@@ -31,10 +31,9 @@ public class ServiceDetailsBL implements BusinessLogic<String, TopologyValidatio
 	@Autowired
 	ControllerDao controllerDao;
 	@Autowired
-	private UserValidationUtil userValidationUtil;
+	UserValidationUtil userValidationUtil;
 	@Autowired
 	TopologyUtility topologyUtility;
-
 	String accountIdentifier;
 	String serviceId;
 	String nDegree;
@@ -81,7 +80,7 @@ public class ServiceDetailsBL implements BusinessLogic<String, TopologyValidatio
 			throw new ServerException("Account details unavailable");
 		}
 
-		UserAccessDetails userAccessDetails = userValidationUtil.getUserAccessDetails(utilityBean.getAuthToken(), accountIdentifier);
+		UserAccessDetails userAccessDetails = userValidationUtil.getUserAccessDetails(utilityBean.getAuthToken(), utilityBean.getAccountIdentifier());
 		if (userAccessDetails == null) {
 			log.error("Exception occurred while fetching user access details for userId [{}] and account [{}]", utilityBean.getAuthToken(), accountIdentifier);
 			throw new ServerException("Error while fetching user access details");

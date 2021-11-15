@@ -6,9 +6,18 @@ public class Constants {
 	    public static final String AUTHORIZATION_TOKEN_IS_NULL_OR_EMPTY = "Authorization token is NULL or empty";
 	    public static final String ACCOUNT_TABLE_NAME_MYSQL_DEFAULT = "account";
 	    public static final int DEFAULT_ACCOUNT_ID = 1;
+	    public static final String DASHBOARD_UID_TAG = "DashboardUId";
 	    public static final String USER_ATTRIBUTES_TABLE_NAME_MYSQL = "user_attributes";
 	    public static final String APPLICATION_CONTROLLER_TYPE = "Application";
 	    public static final String CONTROLLER_TYPE = "ControllerType";
+	    
+	    public static final String PROBLEM_LITERAL = "problem";
+	    public static final String WARNING_LITERAL = "warning";
+	    public static final String BATCH_JOB_LITERAL = "batch_job";
+	    public static final String INVOKED_METHOD = "Invoked method : ";
+	    
+	    public static final String SIGNAL_CLOSE_WINDOW_TIME = "15";
+	    public static final String SIGNAL_CLOSE_WINDOW_DEFAULT_TIME = "15";
 	    
 	    public static final String LAYER_TAG = "LayerName";
 	    public static final String LAYER_DEFAULT = "Type";
@@ -23,6 +32,10 @@ public class Constants {
 	    public static final String CONTROLLER_TAG = "Controller";
 	    public static final String AGENT_TYPE = "Agent";
 	    public static final String JIM_AGENT_TYPE = "JIMAgent";
+	    public static final Integer CASSANDRA_SERVER_DEFAULT_PORT = 9042;
 	    public static final String KUBERNETES = "Kubernetes";
+
+	    public static final int SEVERITY_295 = 295;
+	    public static final int SEVERITY_296 = 296;
 
 }

@@ -27,7 +27,7 @@ public class UserTimeZoneController {
 	JsonFileParser headersParser;
 
 	@ApiOperation(value = "ADD/Update user tagging Detail", response = String.class)
-	 @ApiResponses(value = {@ApiResponse(code = 201, message = "Successfully created|Updated data"),
+	 @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully created|Updated data"),
 	            @ApiResponse(code = 500, message = "Internal Server Error"),
 	            @ApiResponse(code = 400, message = "Invalid Request")})
 	@PostMapping(value = "/users/{username}/timezones")
